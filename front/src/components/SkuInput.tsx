@@ -33,7 +33,8 @@ const SkuInput: FC<SkuInputProps> = ({ handleSubmit, loading }) => {
       ))}
       <br />
       <Button
-        sx={{ marginTop: 1 }}
+        variant='contained'
+        sx={{ marginLeft: 1, marginTop: 3 }}
         onClick={() => handleSubmit(skus)}
         disabled={loading}
       >
