@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Button, TextField, Alert } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 
 interface SkuInputProps {
   handleSubmit: (skus: string[]) => void;
