@@ -8,6 +8,18 @@ interface SkuInputProps {
 
 const SkuInput: FC<SkuInputProps> = ({ handleSubmit, loading }) => {
   const [skus, setSkus] = useState(['', '', '']);
+  const [errors, setErrors] = useState([false, false, false]); // 各フィールドのエラー状態を管理
+
+  const handleBlur = useCallback(
+    (index: number, value: string) => {
+      // 正規表現パターンに合致するかチェック
+      const pattern = /^[A-Za-z0-9-]*$/;
+      const newErrors = [...errors];
+      newErrors[index] = !pattern.test(value);
+      setErrors(newErrors);
+    },
+    [errors]
+  );
 
   const handleChange = useCallback(
     (index: number, value: string) => {
@@ -27,7 +39,9 @@ const SkuInput: FC<SkuInputProps> = ({ handleSubmit, loading }) => {
           variant='standard'
           value={sku}
           onChange={(e) => handleChange(index, e.target.value)}
-          inputProps={{ pattern: '^[A-Za-z0-9-]+$' }}
+          onBlur={(e) => handleBlur(index, e.target.value)}
+          error={errors[index]}
+          helperText={errors[index] ? '英数字と「-」のみ許可されています' : ''}
           sx={{ margin: 1 }}
         />
       ))}
@@ -36,7 +50,7 @@ const SkuInput: FC<SkuInputProps> = ({ handleSubmit, loading }) => {
         variant='contained'
         sx={{ marginLeft: 1, marginTop: 3 }}
         onClick={() => handleSubmit(skus)}
-        disabled={loading}
+        disabled={loading || errors.some((error) => error)}
       >
         ショートコード生成
       </Button>
