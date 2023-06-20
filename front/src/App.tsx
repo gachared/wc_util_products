@@ -5,7 +5,10 @@ import { usePostData } from './hooks/usePostData';
 import { Container } from '@mui/material';
 
 const App: React.FC = () => {
-  const { postData, loading, error, response } = usePostData();
+  const { postData, loading, error, response } = usePostData(
+    import.meta.env.VITE_API_URL,
+    import.meta.env.VITE_NONCE
+  );
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const handleSubmit = useCallback(
@@ -22,13 +25,13 @@ const App: React.FC = () => {
 
   return (
     <Container>
-      <SkuInput onSubmit={handleSubmit} loading={loading} />
-
+      <SkuInput handleSubmit={handleSubmit} loading={loading} />{' '}
+      {/* onSubmitをhandleSubmitに変更 */}
       <SnackbarAlert
         open={openSnackbar}
         onClose={handleCloseSnackbar}
         severity={error ? 'error' : 'success'}
-        message={error ? '失敗しました' : '成功しました'}
+        message={error ? error : response || '成功しました'}
       />
     </Container>
   );

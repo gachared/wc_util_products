@@ -6,6 +6,7 @@ interface SnackbarAlertProps {
   onClose: () => void;
   severity: 'success' | 'error';
   message: string;
+  autoHideDuration?: number; // autoHideDurationを追加
 }
 
 const SnackbarAlert: React.FC<SnackbarAlertProps> = ({
@@ -13,9 +14,10 @@ const SnackbarAlert: React.FC<SnackbarAlertProps> = ({
   onClose,
   severity,
   message,
+  autoHideDuration = 6000, // デフォルト値を設定
 }) => {
   return (
-    <Snackbar open={open} autoHideDuration={6000} onClose={onClose}>
+    <Snackbar open={open} autoHideDuration={autoHideDuration} onClose={onClose}>
       <Alert onClose={onClose} severity={severity} sx={{ width: '100%' }}>
         {message}
       </Alert>
