@@ -12,8 +12,8 @@ const App: FC = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const handleSubmit = useCallback(
-    async (skus: string[]) => {
-      await postData(skus);
+    async (data: { [key: string]: string[] }) => {
+      await postData(data);
       setOpenSnackbar(true);
     },
     [postData]
@@ -25,12 +25,27 @@ const App: FC = () => {
 
   return (
     <Container>
-      <SkuInput handleSubmit={handleSubmit} loading={loading} />{' '}
+      <SkuInput
+        codeType='おすすめ'
+        codeKey='recommend'
+        handleSubmit={handleSubmit}
+        loading={loading}
+      />
+      <SkuInput
+        codeType='ランキング'
+        codeKey='ranking'
+        handleSubmit={handleSubmit}
+        loading={loading}
+      />
       <SnackbarAlert
         open={openSnackbar}
         onClose={handleCloseSnackbar}
         severity={error ? 'error' : 'success'}
-        message={error ? error : response || '成功しました'}
+        message={
+          error
+            ? error
+            : response || '反映に成功しました。TOPページから確認してください'
+        }
       />
     </Container>
   );

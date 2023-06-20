@@ -2,11 +2,18 @@ import { useState, useCallback, FC } from 'react';
 import { Button, TextField } from '@mui/material';
 
 interface SkuInputProps {
-  handleSubmit: (skus: string[]) => void;
+  codeType: string;
+  codeKey: string;
+  handleSubmit: (data: { [key: string]: string[] }) => void;
   loading: boolean;
 }
 
-const SkuInput: FC<SkuInputProps> = ({ handleSubmit, loading }) => {
+const SkuInput: FC<SkuInputProps> = ({
+  codeType,
+  codeKey,
+  handleSubmit,
+  loading,
+}) => {
   const [skus, setSkus] = useState(['', '', '']);
   const [errors, setErrors] = useState([false, false, false]); // 各フィールドのエラー状態を管理
 
@@ -48,11 +55,11 @@ const SkuInput: FC<SkuInputProps> = ({ handleSubmit, loading }) => {
       <br />
       <Button
         variant='contained'
-        sx={{ marginLeft: 1, marginTop: 3 }}
-        onClick={() => handleSubmit(skus)}
+        sx={{ marginLeft: 1, marginY: 3 }}
+        onClick={() => handleSubmit({ [codeKey]: skus })}
         disabled={loading || errors.some((error) => error)}
       >
-        ショートコード生成
+        {codeType}へ反映
       </Button>
     </div>
   );

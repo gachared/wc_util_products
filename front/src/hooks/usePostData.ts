@@ -1,3 +1,4 @@
+// usePostData
 import axios from 'axios';
 import { useState } from 'react';
 
@@ -6,14 +7,14 @@ export const usePostData = (ajaxUrl: string, nonce: string) => {
   const [error, setError] = useState<string | null>(null);
   const [response, setResponse] = useState(null);
 
-  const postData = async (skuData: string[]) => {
+  const postData = async (dataObject: object) => {
     setLoading(true);
     setError(null);
 
     const payload = {
       action: 'save_options',
       nonce: nonce,
-      data: JSON.stringify(skuData),
+      data: JSON.stringify(dataObject),
     };
 
     try {
