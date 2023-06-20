@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import { Snackbar, Alert } from '@mui/material';
 
 interface SnackbarAlertProps {
@@ -6,15 +6,15 @@ interface SnackbarAlertProps {
   onClose: () => void;
   severity: 'success' | 'error';
   message: string;
-  autoHideDuration?: number; // autoHideDurationを追加
+  autoHideDuration?: number;
 }
 
-const SnackbarAlert: React.FC<SnackbarAlertProps> = ({
+const SnackbarAlert: FC<SnackbarAlertProps> = ({
   open,
   onClose,
   severity,
   message,
-  autoHideDuration = 6000, // デフォルト値を設定
+  autoHideDuration = 6000,
 }) => {
   return (
     <Snackbar open={open} autoHideDuration={autoHideDuration} onClose={onClose}>

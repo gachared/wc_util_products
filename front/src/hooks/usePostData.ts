@@ -22,10 +22,10 @@ export const usePostData = (ajaxUrl: string, nonce: string) => {
       if (res.status >= 200 && res.status < 300) {
         setResponse(res.data);
       } else {
-        setError(`Server responded with status code: ${res.status}`);
+        setError(`PostDataのステータスコードのレスポンス: ${res.status}`);
       }
     } catch (e) {
-      setError(`Request failed with error: ${e}`);
+      setError(`PostDataに失敗しました: ${e}`);
     } finally {
       setLoading(false);
     }

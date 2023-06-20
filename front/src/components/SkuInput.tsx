@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback, FC } from 'react';
 import { Button, TextField } from '@mui/material';
 
 interface SkuInputProps {
@@ -6,7 +6,7 @@ interface SkuInputProps {
   loading: boolean;
 }
 
-const SkuInput: React.FC<SkuInputProps> = ({ handleSubmit, loading }) => {
+const SkuInput: FC<SkuInputProps> = ({ handleSubmit, loading }) => {
   const [skus, setSkus] = useState(['', '', '']);
 
   const handleChange = useCallback(
@@ -23,10 +23,12 @@ const SkuInput: React.FC<SkuInputProps> = ({ handleSubmit, loading }) => {
       {skus.map((sku, index) => (
         <TextField
           key={index}
-          label={`SKU ${index + 1}`}
+          label={`商品 ${index + 1}`}
+          variant='standard'
           value={sku}
           onChange={(e) => handleChange(index, e.target.value)}
           inputProps={{ pattern: '^[A-Za-z0-9-]+$' }}
+          sx={{ marginLeft: 2 }}
         />
       ))}
       <Button onClick={() => handleSubmit(skus)} disabled={loading}>
