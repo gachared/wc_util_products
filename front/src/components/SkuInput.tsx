@@ -28,10 +28,15 @@ const SkuInput: FC<SkuInputProps> = ({ handleSubmit, loading }) => {
           value={sku}
           onChange={(e) => handleChange(index, e.target.value)}
           inputProps={{ pattern: '^[A-Za-z0-9-]+$' }}
-          sx={{ marginLeft: 2 }}
+          sx={{ margin: 1 }}
         />
       ))}
-      <Button onClick={() => handleSubmit(skus)} disabled={loading}>
+      <br />
+      <Button
+        sx={{ marginTop: 1 }}
+        onClick={() => handleSubmit(skus)}
+        disabled={loading}
+      >
         ショートコード生成
       </Button>
     </div>
