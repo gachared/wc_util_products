@@ -1,25 +1,23 @@
 import { useState, useCallback, FC } from 'react';
 import { Button, TextField } from '@mui/material';
+import SnackbarAlert from './SnackbarAlert';
+import { usePostData } from '../hooks/usePostData';
 
 interface SkuInputProps {
   codeType: string;
   codeKey: string;
-  handleSubmit: (data: { [key: string]: string[] }) => void;
-  loading: boolean;
 }
 
-const SkuInput: FC<SkuInputProps> = ({
-  codeType,
-  codeKey,
-  handleSubmit,
-  loading,
-}) => {
+const SkuInput: FC<SkuInputProps> = ({ codeType, codeKey }) => {
   const [skus, setSkus] = useState(['', '', '']);
-  const [errors, setErrors] = useState([false, false, false]); // 各フィールドのエラー状態を管理
+  const [errors, setErrors] = useState([false, false, false]);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const { postData, loading, error } = usePostData(
+    import.meta.env.VITE_API_URL
+  );
 
   const handleBlur = useCallback(
     (index: number, value: string) => {
-      // 正規表現パターンに合致するかチェック
       const pattern = /^[A-Za-z0-9-]*$/;
       const newErrors = [...errors];
       newErrors[index] = !pattern.test(value);
@@ -36,6 +34,15 @@ const SkuInput: FC<SkuInputProps> = ({
     },
     [skus]
   );
+
+  const handleSubmission = useCallback(async () => {
+    await postData({ [codeKey]: skus });
+    setOpenSnackbar(true); // postData後にSnackbarを開く
+  }, [postData, codeKey, skus]);
+
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
+  };
 
   return (
     <div>
@@ -55,12 +62,20 @@ const SkuInput: FC<SkuInputProps> = ({
       <br />
       <Button
         variant='contained'
-        sx={{ marginLeft: 1, marginY: 3 }}
-        onClick={() => handleSubmit({ [codeKey]: skus })}
+        sx={{ marginLeft: 1, marginTop: 3 }}
+        onClick={handleSubmission}
         disabled={loading || errors.some((error) => error)}
       >
         {codeType}へ反映
       </Button>
+      <SnackbarAlert
+        open={openSnackbar}
+        onClose={handleCloseSnackbar}
+        severity={error ? 'error' : 'success'}
+        message={
+          error ? error : '反映に成功しました。TOPページから確認してください'
+        }
+      />
     </div>
   );
 };
