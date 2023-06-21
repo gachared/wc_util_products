@@ -5,7 +5,7 @@ import { usePostData } from './hooks/usePostData';
 import { Container } from '@mui/material';
 
 const App: FC = () => {
-  const { postData, loading, error, response } = usePostData(
+  const { postData, loading, error } = usePostData(
     import.meta.env.VITE_API_URL
   );
   const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -41,9 +41,7 @@ const App: FC = () => {
         onClose={handleCloseSnackbar}
         severity={error ? 'error' : 'success'}
         message={
-          error
-            ? error
-            : response || '反映に成功しました。TOPページから確認してください'
+          error ? error : '反映に成功しました。TOPページから確認してください'
         }
       />
     </Container>
