@@ -6,8 +6,7 @@ import { Container } from '@mui/material';
 
 const App: FC = () => {
   const { postData, loading, error, response } = usePostData(
-    import.meta.env.VITE_API_URL,
-    import.meta.env.VITE_NONCE
+    import.meta.env.VITE_API_URL
   );
   const [openSnackbar, setOpenSnackbar] = useState(false);
 

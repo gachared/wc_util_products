@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 
-export const usePostData = (ajaxUrl: string, nonce: string) => {
+export const usePostData = (ajaxUrl: string) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [response, setResponse] = useState(null);
@@ -13,7 +13,6 @@ export const usePostData = (ajaxUrl: string, nonce: string) => {
 
     const payload = {
       action: 'save_options',
-      nonce: nonce,
       data: JSON.stringify(dataObject),
     };
 
