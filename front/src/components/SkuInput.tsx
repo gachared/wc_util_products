@@ -19,7 +19,10 @@ const SkuInput: FC<SkuInputProps> = ({ codeType, codeKey }) => {
     values: skus,
     errors,
     handleChange,
-  } = useFieldArray<string>(['', '', ''], (value) => !pattern.test(value));
+  } = useFieldArray<string>(
+    ['', '', ''],
+    (value) => value.length === 0 || !pattern.test(value)
+  );
 
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
@@ -41,14 +44,14 @@ const SkuInput: FC<SkuInputProps> = ({ codeType, codeKey }) => {
           value={sku}
           onChange={(e) => handleChange(index, e.target.value)}
           error={errors[index]}
-          helperText={errors[index] ? '英数字と「-」のみ許可されています' : ''}
+          helperText={errors[index] ? '空欄または不正な文字列です' : ''}
           sx={{ margin: 1 }}
         />
       ))}
       <br />
       <Button
         variant='contained'
-        sx={{ marginLeft: 1, marginTop: 3 }}
+        sx={{ marginLeft: 1, marginTop: 2, marginBottom: 2 }}
         onClick={handleSubmission}
         disabled={loading || errors.some((error) => error)}
       >
