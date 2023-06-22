@@ -27,6 +27,11 @@ const SkuInput: FC<SkuInputProps> = ({ codeType, codeKey }) => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const handleSubmission = useCallback(async () => {
+    if (skus.some((sku) => sku === '')) {
+      alert('全ての項目を埋めてください。');
+      return;
+    }
+
     await postData({ [codeKey]: skus });
     setOpenSnackbar(true);
   }, [postData, codeKey, skus]);
