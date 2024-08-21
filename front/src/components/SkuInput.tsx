@@ -14,7 +14,7 @@ const SkuInput: FC<SkuInputProps> = ({ codeType, codeKey }) => {
     import.meta.env.VITE_API_URL
   );
 
-  const pattern = /^[A-Za-z0-9-]*$/;
+  const pattern = /^[A-Za-z0-9-_]*$/;
   const {
     values: skus,
     errors,
