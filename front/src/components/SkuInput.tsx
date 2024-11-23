@@ -20,7 +20,7 @@ const SkuInput: FC<SkuInputProps> = ({ codeType, codeKey }) => {
     errors,
     handleChange,
   } = useFieldArray<string>(
-    ['', '', ''],
+    ['', '', '', '', ''],
     (value) => value.length === 0 || !pattern.test(value)
   );
 
